@@ -26,18 +26,36 @@ def count_elements(array)
       i[:count] = count}
 end
 
-def merge_data(keys, data)
-  merged = []
-  keys.each {|i| data.first.map {|k,v| if i.values[0] == k then merged << i.merge(v) end}}
-  merged
+def merge_data(arr1, arr2)
+  arr2[0].map do |name, prop_hash|
+    new_prop_hash = {}
+    arr1.each do |new_attr_hash|
+      if new_attr_hash[:first_name] == name
+        new_prop_hash = prop_hash.merge(new_attr_hash)
+      end
+    end
+    new_prop_hash
+  end
 end
 
- def find_cool(cool)
-    cool.select {|i| i.any? {|k,v| v == "cool"}}
+def find_cool(array)
+  container = []
+  array.each do |element|
+    container << element if element[:temperature] == "cool"
+  end
+  container
 end
 
- def organize_schools(schools)
-    locations_hash = {}
-    schools.collect {|k,v| locations_hash[v[:location]] = []}
-    locations_hash.each {|k,v| schools.each {|k1,v1| if k == v1[:location] then v << k1  end}}
+def organize_schools(schools)
+  organized_schools = {}
+  schools.each do |name, location_hash|
+    location = location_hash[:location]
+    if organized_schools[location]
+      organized_schools[location] << name
+    else
+      organized_schools[location] = []
+      organized_schools[location] << name
+    end
+  end
+  organized_schools
 end
